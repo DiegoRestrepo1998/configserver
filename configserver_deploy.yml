@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-dep
+  labels:
+    app: micro-configserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: micro-configserver
+  template:
+    metadata: 
+      labels:
+        app: micro-configserver
+    spec: 
+      containers:
+        - name: micro-configserver
+          image: dfrestrepo1998/microservicio_configserver:1.0.0
+          ports:
+          - containerPort: 8071
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: micro-configserver-service
+spec:
+  selector:
+    app: micro-configserver
+  ports:
+    - protocol: TCP
+      port: 8071
+      targetPort: 8071

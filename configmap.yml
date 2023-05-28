@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: micropro-configmap
+data:
+  profiles-active: dev
+  config-import: configserver:http://micro-configserver-service:8071/
+  eureka-serviceurl: http://micro-eurekaserver-service:8070/eureka/
