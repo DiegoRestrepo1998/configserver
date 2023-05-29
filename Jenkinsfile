@@ -23,7 +23,7 @@ pipeline {
         
         stage('Pushing image...') {
             environment {
-                def imageName = "dfrestrepo1998/microservicio_configserver:1.0.0:${env.BUILD_ID}"
+                def imageName = "dfrestrepo1998/microservicio_configserver:${env.BUILD_ID}"
             }
             steps {
                 script {
