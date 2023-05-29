@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        PROJECT_ID = 'My First Project'
+        PROJECT_ID = 'MyFirstProject'
                 CLUSTER_NAME = 'cluster-jenkins-project'
                 LOCATION = 'us-central1'
                 CREDENTIALS_ID = 'JenkinsProject'
