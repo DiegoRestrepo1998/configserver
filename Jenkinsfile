@@ -21,16 +21,15 @@ pipeline {
             }
         }
         
-        stage('Pushing image...') {
-            environment {
-                def imageName = "dfrestrepo1998/microservicio_configserver:1.0.0:${env.BUILD_ID}"
+        stage('Pushing Image...'){
+            environment{
+                registryCredential = 'dockerhub'
             }
-            steps {
-                script {
-                    withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
-                        bat 'docker login -u dfrestrepo1998 -p ${dockerhub}'
-                        bat "docker push ${imageName}"
-                    }
+
+            steps{
+                script{
+                    docker.withRegistry('https://registry.hub.docker.com',registryCredential)
+                        dockerImage.push("${env.BUILD_ID}")
                 }
             }
         }
