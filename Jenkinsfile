@@ -28,8 +28,8 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
-                        sh 'docker login -u dfrestrepo1998 -p ${dockerhub}'
-                        sh "docker push ${imageName}"
+                        bat 'docker login -u dfrestrepo1998 -p ${dockerhub}'
+                        bat "docker push ${imageName}"
                     }
                 }
             }
