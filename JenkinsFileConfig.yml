@@ -24,8 +24,8 @@ pipeline {
                         docker.image(dockerTag).push()
                     }
                 }
+            }
         }
-
         stage('Deploying App to Kubernetes') {
             steps {
                 script {
@@ -33,5 +33,6 @@ pipeline {
                 }
             }
         }
+    
     }
 }
