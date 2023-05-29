@@ -1,10 +1,5 @@
 pipeline {
 
-    environment{
-        dockerimagename = "dfrestrepo1998/microservicio_configserver"
-        dockerimage = ""
-    }
-
     agent any
 
     stages {
@@ -16,24 +11,19 @@ pipeline {
         }
 
         stage('Build Image...'){
-            steps{
+            steps {
                 script {
-                    dockerImage = docker.build dockerimagename
+                    // Definir la etiqueta de la imagen en Docker Hub
+                    def dockerTag = 'dfrestrepo1998/microservicio_configserver:1.0.0'
+                    
+                    // Construir la imagen de Docker usando la etiqueta especificada
+                    docker.build dockerTag, '-f Dockerfile .'
+                    
+                    // Empujar la imagen al Docker Hub
+                    docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
+                        docker.image(dockerTag).push()
+                    }
                 }
-            }
-        }
-
-        stage('Pushing Image...'){
-            environment{
-                registryCredential = 'dockerhublogin'
-            }
-
-            steps{
-                script{
-                    docker.withRegistry('https://registry.hub.docker.com',registryCredential)
-                        dockerImage.push("latest")
-                }
-            }
         }
 
         stage('Deploying App to Kubernetes') {
