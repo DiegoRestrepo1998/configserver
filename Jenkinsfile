@@ -22,16 +22,16 @@ pipeline {
         }
         
         stage('Pushing image...') {
+            environment {
+                def imageName = "dfrestrepo1998/microservicio_configserver:1.0.0"
+            }
             steps {
                 script {
-                    withCredentials( \
-                                 [string(credentialsId: 'dfrestrepo1998',\
-                                 variable: 'dfrestrepo1998')]) {
-                        sh "docker login -u dfrestrepo1998 -p ${dfrestrepo1998}"
+                    withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
+                        sh 'docker login -u dfrestrepo1998 -p ${dockerhub}'
+                        sh "docker push ${imageName}"
                     }
-                    app.push("1.0.0")
-                 }
-                                 
+                }
             }
         }
     
