@@ -1,0 +1,47 @@
+pipeline {
+
+    environment{
+        dockerimagename = "dfrestrepo1998/microservicio_configserver"
+        dockerimage = ""
+    }
+
+    agent any
+
+    stages {
+
+        stage('Checkout Source...'){
+            steps{
+                git 'https://github.com/DiegoRestrepo1998/configserver.git'
+            }
+        }
+
+        stage('Build Image...'){
+            steps{
+                script {
+                    dockerImage = docker.build dockerimagename
+                }
+            }
+        }
+
+        stage('Pushing Image...'){
+            environment{
+                registryCredential = 'dockerhublogin'
+            }
+
+            steps{
+                script{
+                    docker.withRegistry('https://registry.hub.docker.com',registryCredential)
+                        dockerImage.push("latest")
+                }
+            }
+        }
+
+        stage('Deploying App to Kubernetes') {
+            steps {
+                script {
+                    kubernetesDeploy(configs: "configserver_deploy.yml",kubeconfigId: "kubernetes")
+                }
+            }
+        }
+    }
+}
