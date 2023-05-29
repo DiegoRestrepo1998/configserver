@@ -14,9 +14,12 @@ pipeline {
             }
         }
         stage('Building image...') {
+            environment {
+                def imageName = "dfrestrepo1998/microservicio_configserver:${env.BUILD_ID}"
+            }
             steps {
                 script {
-                    app = docker.build("dfrestrepo1998/microservicio_configserver:1.0.0")
+                    sh "docker build -t ${imageName} ."
                     }
             }
         }
