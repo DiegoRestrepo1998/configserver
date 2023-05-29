@@ -23,7 +23,7 @@ pipeline {
         
         stage('Pushing image...') {
             environment {
-                def imageName = "dfrestrepo1998/microservicio_configserver:1.0.0"
+                def imageName = "dfrestrepo1998/microservicio_configserver:1.0.0:${env.BUILD_ID}"
             }
             steps {
                 script {
@@ -40,7 +40,7 @@ pipeline {
                 echo "Deployment started ..."
                 sh 'ls -ltr'
                 sh 'pwd'
-                sh "sed -i 's/pipeline:latest/pipeline:1.0.0/g' configserver_deploy.yml"
+                sh "sed -i 's/pipeline:latest/pipeline:${env.BUILD_ID}/g' configserver_deploy.yml"
                 step([$class: 'KubernetesEngineBuilder', \
                   projectId: env.PROJECT_ID, \
                   clusterName: env.CLUSTER_NAME, \
