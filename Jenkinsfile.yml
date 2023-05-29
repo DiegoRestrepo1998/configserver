@@ -10,7 +10,9 @@ pipeline {
     stages {
         stage('Check Git...') {
             steps{
-                git 'https://github.com/DiegoRestrepo1998/configserver.git'
+                steps {
+                    checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/DiegoRestrepo1998/configserver.git']])
+                }
             }
         }
         stage('Building image...') {
