@@ -25,9 +25,9 @@ pipeline {
             steps {
                 script {
                     withCredentials( \
-                                 [string(credentialsId: 'dockerhub',\
-                                 variable: 'dockerhub')]) {
-                        sh "docker login -u dfrestrepo1998 -p ${dockerhub}"
+                                 [string(credentialsId: 'dfrestrepo1998',\
+                                 variable: 'dfrestrepo1998')]) {
+                        sh "docker login -u dfrestrepo1998 -p ${dfrestrepo1998}"
                     }
                     app.push("1.0.0")
                  }
