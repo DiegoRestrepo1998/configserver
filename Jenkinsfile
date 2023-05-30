@@ -4,7 +4,7 @@ pipeline {
         PROJECT_ID = 'galvanic-fort-387616'
                 CLUSTER_NAME = 'cluster-jenkins-project'
                 LOCATION = 'us-central1'
-                CREDENTIALS_ID = 'JenkinsProject'
+                CREDENTIALS_ID = 'MyFirstProject'
     }
     
     stages {
